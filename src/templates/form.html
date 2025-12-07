@@ -1,0 +1,41 @@
+{# templates/form.html #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ title | default(value="Form") }}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    label { display:block; margin-top: 8px; }
+    input[type="text"], textarea { width: 100%; padding: 8px; }
+    button { margin-top: 12px; padding: 8px 12px; }
+  </style>
+</head>
+<body>
+  <h1>{{ title | default(value="Form") }}</h1>
+
+  <form action="{{ action }}" method="post">
+    <label>Nombre
+      <input type="text" name="name" value="{{ item.name | default(value=\"\") | escape }}" required>
+    </label>
+
+    <label>Descripción
+      <textarea name="description">{{ item.description | default(value=\"\") | escape }}</textarea>
+    </label>
+
+    <label>Cantidad
+      <input type="number" name="quantity" value="{{ item.quantity | default(value=0) }}">
+    </label>
+
+    <label>Precio
+      <input type="text" name="price" value="{{ item.price | default(value=0.0) }}">
+    </label>
+
+    <div>
+      <button type="submit">Guardar</button>
+      <a href="/items">Cancelar</a>
+    </div>
+  </form>
+</body>
+</html>

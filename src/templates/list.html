@@ -1,0 +1,48 @@
+{# templates/list.html #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Inventario - Items</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background: #f5f5f5; }
+    a.button { background: #2d89ef; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px; }
+    form.inline { display:inline; }
+  </style>
+</head>
+<body>
+  <h1>Inventario / Items</h1>
+  <p><a class="button" href="/items/new">Crear item</a></p>
+
+  {% if items | length == 0 %}
+    <p>No hay items aún.</p>
+  {% else %}
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Nombre</th><th>Descripción</th><th>Cantidad</th><th>Precio</th><th>Acciones</th></tr>
+      </thead>
+      <tbody>
+        {% for it in items %}
+          <tr>
+            <td>{{ it.id }}</td>
+            <td>{{ it.name | escape }}</td>
+            <td>{{ it.description | default(value="") | escape }}</td>
+            <td>{{ it.quantity }}</td>
+            <td>{{ it.price }}</td>
+            <td>
+              <a href="/items/{{ it.id }}/edit">Editar</a>
+              <form class="inline" action="/items/{{ it.id }}/delete" method="post" onsubmit="return confirm('Eliminar item #{{ it.id }}?');">
+                <button type="submit">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</body>
+</html>
